@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes Management - School System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>
+    <script src="firebase-db.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Shkolo - School Management</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="students.html">Students</a></li>
+                <li><a href="teachers.html">Teachers</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="attendance.html">Attendance</a></li>
+                <li><a href="import.html">Import</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="management-container">
+        <div class="management-header">
+            <h1>Classes Management</h1>
+            <button class="btn-primary" onclick="openAddClassForm()">+ Add New Class</button>
+        </div>
+
+        <!-- Add Class Form -->
+        <section class="form-section" id="addClassForm" style="display: none;">
+            <h2>Add New Class</h2>
+            <form class="management-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="className">Class Name</label>
+                        <input type="text" id="className" placeholder="e.g., Grade 10-A" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="section">Section</label>
+                        <input type="text" id="section" placeholder="e.g., A, B, C" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="classTeacher">Class Teacher</label>
+                        <select id="classTeacher" required>
+                            <option value="">Select Teacher</option>
+                            <option value="Mr. Ahmed Khan">Mr. Ahmed Khan</option>
+                            <option value="Mrs. Fatima Ali">Mrs. Fatima Ali</option>
+                            <option value="Dr. Hassan Ibrahim">Dr. Hassan Ibrahim</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="capacity">Student Capacity</label>
+                        <input type="number" id="capacity" placeholder="e.g., 40" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="room">Room Number</label>
+                        <input type="text" id="room" placeholder="e.g., 101" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule">Schedule</label>
+                        <input type="text" id="schedule" placeholder="e.g., 8:00 AM - 2:00 PM" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-success">Add Class</button>
+                    <button type="button" class="btn-cancel" onclick="closeAddClassForm()">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Search and Filter -->
+        <section class="search-filter">
+            <input type="text" placeholder="Search by class name..." class="search-input">
+            <select class="filter-select">
+                <option value="">All Grades</option>
+                <option value="Grade 9">Grade 9</option>
+                <option value="Grade 10">Grade 10</option>
+                <option value="Grade 11">Grade 11</option>
+            </select>
+        </section>
+
+        <!-- Classes Table -->
+        <section class="table-section">
+            <table class="management-table">
+                <thead>
+                    <tr>
+                        <th>Class Name</th>
+                        <th>Section</th>
+                        <th>Class Teacher</th>
+                        <th>Students</th>
+                        <th>Capacity</th>
+                        <th>Room</th>
+                        <th>Schedule</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Grade 9</td>
+                        <td>A</td>
+                        <td>Mr. Ahmed Khan</td>
+                        <td>38</td>
+                        <td>40</td>
+                        <td>101</td>
+                        <td>8:00 AM - 2:00 PM</td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Grade 9</td>
+                        <td>B</td>
+                        <td>Mrs. Fatima Ali</td>
+                        <td>35</td>
+                        <td>40</td>
+                        <td>102</td>
+                        <td>8:00 AM - 2:00 PM</td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Grade 10</td>
+                        <td>A</td>
+                        <td>Dr. Hassan Ibrahim</td>
+                        <td>40</td>
+                        <td>40</td>
+                        <td>103</td>
+                        <td>8:00 AM - 2:00 PM</td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Grade 10</td>
+                        <td>B</td>
+                        <td>Mr. Ahmed Khan</td>
+                        <td>36</td>
+                        <td>40</td>
+                        <td>104</td>
+                        <td>8:00 AM - 2:00 PM</td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 All rights reserved! Created by Ivaylo Terziev</p>
+            <p><a href="contact.html">Contact Us</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Check login
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+            }
+               // Check if user is Administrator
+               if (localStorage.getItem('userRole') !== 'Administrator') {
+                   alert('Access denied. Only administrators can access this page.');
+                   window.location.href = 'dashboard.html';
+               }
+        });
+
+        function openAddClassForm() {
+            document.getElementById('addClassForm').style.display = 'block';
+        }
+
+        function closeAddClassForm() {
+            document.getElementById('addClassForm').style.display = 'none';
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                localStorage.removeItem('userRole');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
